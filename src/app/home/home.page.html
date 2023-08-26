@@ -3,11 +3,15 @@
   [translucent]="true"
   style="--background: #132742; --border-width: 0"
 >
-  <ion-toolbar mode="md" style="--background: #132742; --border-width: 0">
+  <ion-toolbar
+    mode="md"
+    class="mt-4"
+    style="--background: #132742; --border-width: 0"
+  >
     <div class="flex justify-between align-center w-full">
       <div class="flex justify-left">
         <ion-buttons slot="start">
-          <ion-back-button></ion-back-button>
+          <ion-back-button color="secondary"></ion-back-button>
         </ion-buttons>
         <ion-title class="text-white ml-3">Club Events</ion-title>
       </div>
@@ -25,13 +29,6 @@
   scroll-y="false"
   class="bg-gray pt-2 rounded-t-3xl tt"
 >
-  <!-- <div>
-    <ejs-calendar
-      [values]="dateValues"
-      [isMultiSelection]="multiSelect"
-    ></ejs-calendar>
-  </div> -->
-
   <div class="h-full">
     <div class="mt-8 mb-5 mx-4 flex justify-between">
       <ion-segment [(ngModel)]="type" class="bg-white w-2/3" mode="md">
@@ -42,26 +39,22 @@
           Local Event
         </ion-segment-button>
       </ion-segment>
-      <!-- <ion-segment [(ngModel)]="type" class="bg-white w-2/3" mode="md">
-      <a class="p-0 m-0" value="club"> Club Event </a>
-      <a value="local"> Local Event </a>
-    </ion-segment> -->
-      <!-- <ion-list *ngIf="type==='local'"> -->
-      <!-- <ion-item> -->
-      <div class="w-24 h-12" *ngIf="type==='local'">
+      <div
+        class="w-24 h-12 px-2 border-2 border-[#ffcccb] bg-[#FEF8F8]"
+        *ngIf="type==='local'"
+      >
         <ion-select
           aria-label="date"
           interface="popover"
           fill="outline"
           placeholder="date"
+          (ionChange)="triggerEvent($event)"
         >
           <ion-select-option value="today">Today</ion-select-option>
           <ion-select-option value="week">Week</ion-select-option>
           <ion-select-option value="month">Month</ion-select-option>
         </ion-select>
       </div>
-      <!-- </ion-item> -->
-      <!-- </ion-list> -->
     </div>
 
     <ng-container [ngSwitch]="type">
@@ -81,47 +74,28 @@
             class="bg-white m-auto"
             (ionChange)="dateTimeUpdated($event)"
           ></ion-datetime>
-          <!-- <ion-label color="primary">{{viewMonth}}</ion-label>
-          <div>
-            <ion-button
-              style="
-                color: --ion-color-secondary;
-                background-color: --ion-color-primary;
-              "
-              color="secondary"
-              fill="clear"
-              size="small"
-              (click)="preMonth()"
-            >
-              <ion-icon name="arrow-back-outline"></ion-icon>
-            </ion-button>
-            <ion-button
-              color="secondary"
-              fill="clear"
-              size="small"
-              (click)="nextMonth()"
-            >
-              <ion-icon name="arrow-forward-outline"></ion-icon>
-            </ion-button>
-          </div> -->
         </div>
-        <!-- <div class="h-auto">
-          <calendar
-            (onTitleChanged)="viewMonth = $event"
-            [startingDayMonth]="1"
-            (onCurrentDateChanged)="onCurrentChanged($event)"
-            class="h-auto"
-          ></calendar>
-        </div> -->
+
         <div
           class="px-4 py-8 bg-[#ffcccb] h-full rounded-t-[40px] overflow-scroll"
         >
+          <div
+            class="text-[#132742] text-normal flex justify-content align-center w-full"
+            *ngIf="dateEvents.length === 0;"
+          >
+            <h1
+              class="text-normal mx-auto text-[#132742]"
+              style="font-size: 3rem"
+            >
+              No Events
+            </h1>
+          </div>
           <div *ngFor="let event of dateEvents" class="m-0 my-5">
             <ion-card
-              class="flex flex-col rounded-xl m-0 bg-white bg-clip-border text-gray-700 shadow-md"
+              class="flex flex-col rounded-xl text-lg m-0 bg-white bg-clip-border text-gray-700 shadow-md"
             >
               <div class="flex justify-between align-center mx-3 mt-3 mb-1">
-                <ion-card-header style="color: #132742">
+                <ion-card-header class="text-lg" style="color: #132742">
                   {{event.name}} - 2020
                 </ion-card-header>
                 <ion-icon name="ticket-outline"></ion-icon>
@@ -130,22 +104,24 @@
                 <div class="flex justify-left">
                   <ion-thumbnail>
                     <img
-                      src="../../assets/B.jpg"
+                      src="https://picsum.photos/150"
                       class="w-auto h-auto"
                       alt=""
                     />
                   </ion-thumbnail>
-                  <div>
+                  <div class="ml-5 text-base">
                     <p class="text-[#ffb5b6]">{{event.date}}</p>
                     <p
-                      class="block font-sans ml-3 text-base text-[#132742] font-light leading-relaxed"
+                      class="block font-sans text-base text-[#132742] font-light leading-relaxed"
                     >
                       {{event.description}}
                     </p>
                   </div>
                 </div>
               </ion-card-content>
-              <div class="flex justify-between align-center mx-3 mt-1 mb-3">
+              <div
+                class="flex justify-between text-base align-center mx-3 mt-1 mb-3"
+              >
                 <div class="flex justify-between align-center">
                   <p style="color: #132742">{{event.venue}}</p>
                   <p style="color: #132742">
@@ -170,8 +146,8 @@
           <ion-card
             class="flex flex-col rounded-xl m-0 my-5 bg-white bg-clip-border text-gray-700 shadow-md"
           >
-            <div class="flex justify-left align-center mx-3 mt-3 mb-1">
-              <ion-card-header style="color: #132742">
+            <div class="flex justify-between align-center mx-3 mt-3 mb-1">
+              <ion-card-header class="text-lg" style="color: #132742">
                 {{event.name}} - 2020
               </ion-card-header>
               <ion-icon name="ticket-outline"></ion-icon>
@@ -179,19 +155,21 @@
             <ion-card-content class="mx-3 my-1">
               <div class="flex">
                 <ion-thumbnail>
-                  <img src="../../assets/B.jpg" alt="" />
+                  <img src="https://picsum.photos/150" alt="" />
                 </ion-thumbnail>
-                <div>
+                <div class="ml-5 text-base">
                   <p class="text-[#ffb5b6]">{{event.date}}</p>
                   <p
-                    class="block font-sans ml-3 text-base text-[#132742] font-light leading-relaxed"
+                    class="block font-sans text-[#132742] font-light leading-relaxed"
                   >
                     {{event.description}}
                   </p>
                 </div>
               </div>
             </ion-card-content>
-            <div class="flex justify-between align-center mx-3 mt-1 mb-3">
+            <div
+              class="flex justify-between text-base align-center mx-3 mt-1 mb-3"
+            >
               <div class="flex justify-between align-center">
                 <p class="text-[#132742]">{{event.venue}}</p>
                 <p class="ml-2 text-[#132742]">
