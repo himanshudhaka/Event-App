@@ -1,20 +1,211 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<ion-header
+  class="ion-no-border"
+  [translucent]="true"
+  style="--background: #132742; --border-width: 0"
+>
+  <ion-toolbar mode="md" style="--background: #132742; --border-width: 0">
+    <div class="flex justify-between align-center w-full">
+      <div class="flex justify-left">
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title class="text-white ml-3">Club Events</ion-title>
+      </div>
+      <ion-icon
+        class="text-[#ffcccb] mr-5"
+        name="ellipsis-vertical-sharp"
+      ></ion-icon>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content
+  [fullscreen]="true"
+  forceOverscroll="false"
+  scroll-y="false"
+  class="bg-gray pt-2 rounded-t-3xl tt"
+>
+  <!-- <div>
+    <ejs-calendar
+      [values]="dateValues"
+      [isMultiSelection]="multiSelect"
+    ></ejs-calendar>
+  </div> -->
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div class="h-full">
+    <div class="mt-8 mb-5 mx-4 flex justify-between">
+      <ion-segment [(ngModel)]="type" class="bg-white w-2/3" mode="md">
+        <ion-segment-button class="text-[#CDD7DC]" value="club">
+          Club Event
+        </ion-segment-button>
+        <ion-segment-button class="text-[#CDD7DC]" value="local">
+          Local Event
+        </ion-segment-button>
+      </ion-segment>
+      <!-- <ion-segment [(ngModel)]="type" class="bg-white w-2/3" mode="md">
+      <a class="p-0 m-0" value="club"> Club Event </a>
+      <a value="local"> Local Event </a>
+    </ion-segment> -->
+      <!-- <ion-list *ngIf="type==='local'"> -->
+      <!-- <ion-item> -->
+      <div class="w-24 h-12" *ngIf="type==='local'">
+        <ion-select
+          aria-label="date"
+          interface="popover"
+          fill="outline"
+          placeholder="date"
+        >
+          <ion-select-option value="today">Today</ion-select-option>
+          <ion-select-option value="week">Week</ion-select-option>
+          <ion-select-option value="month">Month</ion-select-option>
+        </ion-select>
+      </div>
+      <!-- </ion-item> -->
+      <!-- </ion-list> -->
+    </div>
+
+    <ng-container [ngSwitch]="type">
+      <div class="bg-white overflow-scroll h-full" *ngSwitchCase="'club'">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2px 8px;
+          "
+        >
+          <ion-datetime
+            presentation="date"
+            [multiple]="true"
+            [value]="dates"
+            class="bg-white m-auto"
+            (ionChange)="dateTimeUpdated($event)"
+          ></ion-datetime>
+          <!-- <ion-label color="primary">{{viewMonth}}</ion-label>
+          <div>
+            <ion-button
+              style="
+                color: --ion-color-secondary;
+                background-color: --ion-color-primary;
+              "
+              color="secondary"
+              fill="clear"
+              size="small"
+              (click)="preMonth()"
+            >
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </ion-button>
+            <ion-button
+              color="secondary"
+              fill="clear"
+              size="small"
+              (click)="nextMonth()"
+            >
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </div> -->
+        </div>
+        <!-- <div class="h-auto">
+          <calendar
+            (onTitleChanged)="viewMonth = $event"
+            [startingDayMonth]="1"
+            (onCurrentDateChanged)="onCurrentChanged($event)"
+            class="h-auto"
+          ></calendar>
+        </div> -->
+        <div
+          class="px-4 py-8 bg-[#ffcccb] h-full rounded-t-[40px] overflow-scroll"
+        >
+          <div *ngFor="let event of dateEvents" class="m-0 my-5">
+            <ion-card
+              class="flex flex-col rounded-xl m-0 bg-white bg-clip-border text-gray-700 shadow-md"
+            >
+              <div class="flex justify-between align-center mx-3 mt-3 mb-1">
+                <ion-card-header style="color: #132742">
+                  {{event.name}} - 2020
+                </ion-card-header>
+                <ion-icon name="ticket-outline"></ion-icon>
+              </div>
+              <ion-card-content class="mx-3 my-1">
+                <div class="flex justify-left">
+                  <ion-thumbnail>
+                    <img
+                      src="../../assets/B.jpg"
+                      class="w-auto h-auto"
+                      alt=""
+                    />
+                  </ion-thumbnail>
+                  <div>
+                    <p class="text-[#ffb5b6]">{{event.date}}</p>
+                    <p
+                      class="block font-sans ml-3 text-base text-[#132742] font-light leading-relaxed"
+                    >
+                      {{event.description}}
+                    </p>
+                  </div>
+                </div>
+              </ion-card-content>
+              <div class="flex justify-between align-center mx-3 mt-1 mb-3">
+                <div class="flex justify-between align-center">
+                  <p style="color: #132742">{{event.venue}}</p>
+                  <p style="color: #132742">
+                    {{(event.startTime.toDate().getHours())%12 || 12 }} AM to
+                    {{(event.endTime.toDate().getHours())%12 || 12 }} PM
+                  </p>
+                </div>
+                <div>
+                  <h4>{{event.price}}</h4>
+                </div>
+              </div>
+            </ion-card>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="h-full px-4 py-8 bg-[#ffcccb] rounded-t-[40px] overflow-scroll"
+        *ngSwitchCase="'local'"
+      >
+        <div *ngFor="let event of events">
+          <ion-card
+            class="flex flex-col rounded-xl m-0 my-5 bg-white bg-clip-border text-gray-700 shadow-md"
+          >
+            <div class="flex justify-left align-center mx-3 mt-3 mb-1">
+              <ion-card-header style="color: #132742">
+                {{event.name}} - 2020
+              </ion-card-header>
+              <ion-icon name="ticket-outline"></ion-icon>
+            </div>
+            <ion-card-content class="mx-3 my-1">
+              <div class="flex">
+                <ion-thumbnail>
+                  <img src="../../assets/B.jpg" alt="" />
+                </ion-thumbnail>
+                <div>
+                  <p class="text-[#ffb5b6]">{{event.date}}</p>
+                  <p
+                    class="block font-sans ml-3 text-base text-[#132742] font-light leading-relaxed"
+                  >
+                    {{event.description}}
+                  </p>
+                </div>
+              </div>
+            </ion-card-content>
+            <div class="flex justify-between align-center mx-3 mt-1 mb-3">
+              <div class="flex justify-between align-center">
+                <p class="text-[#132742]">{{event.venue}}</p>
+                <p class="ml-2 text-[#132742]">
+                  {{(event.startTime.toDate().getHours())%12 || 12 }} AM to
+                  {{(event.endTime.toDate().getHours())%12 || 12 }} PM
+                </p>
+              </div>
+              <div>
+                <h4>{{event.price}}</h4>
+              </div>
+            </div>
+          </ion-card>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </ion-content>

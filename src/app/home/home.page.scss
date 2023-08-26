@@ -1,27 +1,64 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+.segment-button-indicator {
+  width: 30% !important;
+}
+.segment-button-indicator-animated {
+  width: 30% !important;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+[_nghost-ng-c3785387867] > div[_ngcontent-ng-c3785387867] {
+  height: auto;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
+// ion-select {
+//   background-color: #ffb5b6;
+// }
 
-  color: #8c8c8c;
-
-  margin: 0;
+.segment-button-checked ::ng-deep {
+  color: #132742;
 }
 
-#container a {
-  text-decoration: none;
+ion-item {
+  --background: #fef8f8;
+  // --color: #fff;
+
+  --border-color: #ffb5b6;
+  --border-radius: 10px;
+  --border-width: 1px;
+  // --border-style: dashed;
+  --border-width: 2px;
+  // --padding-start: 0px;
+  // --padding-end: 0px;
+}
+ion-card-content {
+  padding: 0px;
+}
+ion-card-header {
+  padding: 0;
+}
+
+.item-inner {
+  padding-inline-end: 0px !important;
+  --inner-padding-end: 0px;
+}
+
+ion-segment-button::part(indicator) {
+  width: 36px;
+  color: #ffb5b6;
+}
+ion-segment-button::part(indicator-background) {
+  // width: 36px;
+  background: #ffb5b6;
+  margin-left: 18px;
+}
+ion-segment-button::part(native) {
+  padding: 0px;
+}
+
+.segment-button-checked {
+  padding: 0;
+}
+ion-segment-button {
+  // min-height: 20px;
+  --padding-start: 0px;
+  --padding-end: 0px;
 }
