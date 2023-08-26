@@ -15,10 +15,29 @@
         </ion-buttons>
         <ion-title class="text-white ml-3">Club Events</ion-title>
       </div>
-      <ion-icon
-        class="text-[#ffcccb] mr-5"
+      <!-- <ion-icon
+        class="text-[#ffcccb] mr-5 h-12"
         name="ellipsis-vertical-sharp"
-      ></ion-icon>
+      ></ion-icon> -->
+      <ion-button id="click-trigger" class="mr-5 h-12"
+        ><ion-icon
+          class="text-[#ffcccb]"
+          name="ellipsis-vertical-sharp"
+        ></ion-icon
+      ></ion-button>
+      <ion-popover trigger="click-trigger" triggerAction="click">
+        <ng-template>
+          <ion-content class="ion-padding"
+            ><ion-button
+              color="secondary"
+              class="text-[#132742]"
+              expand="block"
+              [routerLink]="['/login']"
+              >Logout</ion-button
+            ></ion-content
+          >
+        </ng-template>
+      </ion-popover>
     </div>
   </ion-toolbar>
 </ion-header>

@@ -62,3 +62,8 @@ ion-segment-button {
   --padding-start: 0px;
   --padding-end: 0px;
 }
+ion-select {
+  --border-width: 0; /* Set the border width to 0 */
+  // --padding-start: 0; /* Adjust padding if needed */
+  // --padding-end: 0; /* Adjust padding if needed */
+}
