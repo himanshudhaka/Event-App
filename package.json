@@ -24,6 +24,7 @@
     "@angular/router": "^16.0.0",
     "@ionic/angular": "^7.0.0",
     "@syncfusion/ej2-angular-calendars": "^22.2.10",
+    "firebase": "^9.9.1",
     "ion2-calendar": "^3.5.0",
     "ionic2-calendar": "^2.1.0",
     "ionicons": "^7.0.0",
